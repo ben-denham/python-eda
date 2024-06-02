@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Exploratory Data Analysis with Python</title>
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="dist/theme/white.css">
+
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css">
+
+    <style>
+     :root {
+         --r-heading-text-transform: none;
+     }
+    </style>
+
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+<!--
+          <section data-markdown>
+            <textarea data-template>
+
+            </textarea>
+          </section>
+-->
+
+        <!-- WELCOME -->
+        <section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Welcome! Get ready for the Exploratory Data Analysis workshop:
+
+<div style="font-size: 0.78em;">
+
+1. Open the workshop materials: **[ben-denham.github.io/python-eda](https://ben-denham.github.io/python-eda)**
+2. Click the link to open **Google Colab Notebooks**
+3. Click the **`New Notebook`** button
+4. Type **`1+1`** into the empty prompt/cell, then **press the `Enter` key *while holding* the `Shift` key** to run it
+5. After a short delay while the notebook starts, you should see the result: `2`
+6. If you need help, **ask a neighbour or a helper**
+
+</div>
+            </textarea>
+          </section>
+
+        </section>
+
+        <!-- INTRODUCTION -->
+        <section>
+
+          <section data-markdown>
+            <textarea data-template>
+# Exploratory Data Analysis with Python
+
+### Dr Ben Denham
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## My Path to Data Science
+
+<div>
+
+  <img src="images/about-me.png" width="90%">
+
+</div>
+
+<aside class="notes">
+
+  * My roots lie in software engineering
+  * I started seriously using these tools and techniques while completing a PhD in machine learning
+  * And I now regularly explore data as a data scientist at Fisher & Paykel Appliances
+
+</aside>
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Workshop Structure
+
+<style>
+
+ tr.highlight-blue {
+     background: #62BFF5;
+     font-weight: bold;
+ }
+ tr.highlight-red {
+     background: #F56267;
+ }
+ tr.highlight-yellow {
+     background: #F5F262;
+ }
+
+</style>
+
+<table>
+
+  <tr class="highlight-yellow">
+    <td>Introduction</td>
+    <td>2:00 - 2:15</td>
+  </tr>
+  <tr class="highlight-blue">
+    <td>Tutorial 1: Loading and Visualising</td>
+    <td>2:15 - 3:00</td>
+  </tr>
+  <tr class="highlight-red">
+    <td>Afternoon Tea</td>
+    <td>3:00 - 3:20</td>
+  </tr>
+  <tr class="highlight-blue">
+    <td>Tutorial 2: Filtering and Preparing</td>
+    <td>3:20 - 4:20</td>
+  </tr>
+  <tr class="highlight-yellow">
+    <td>Presentation: Effective Data Analysis</td>
+    <td>4:20 - 4:40</td>
+  </tr>
+  <tr class="highlight-red">
+    <td>Short break</td>
+    <td>4:40 - 4:45</td>
+  </tr>
+  <tr class="highlight-blue">
+    <td>Tutorial 3: Grouping and Presenting</td>
+    <td>4:45 - 5:45</td>
+  </tr>
+  <tr class="highlight-yellow">
+    <td>Wrap-Up</td>
+    <td>5:45 - 6:00</td>
+  </tr>
+
+</table>
+
+<aside class="notes">
+
+  * Timings are just a guide
+
+</aside>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Hands-On Tutorials
+
+<div style="display: flex;">
+
+* **Follow-along coding**
+  * **Tutorial 1:** Typing everything
+  * **Tutorials 2 and 3:** Less typing, more complex examples
+* **Practice exercises**
+  * Try it yourself, then together
+  * Plus "extra for experts"
+
+<img src="images/typing.webp" style="width: 35%; object-fit: contain;">
+
+</div>
+
+<aside class="notes">
+
+  * As we progress through tutorials, examples will get more complex, so there will be less typing
+
+</aside>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Getting Help!
+
+<div style="display: flex;">
+
+* <strong>If you get stuck at any point</strong>
+  * Raise your hand! A helper will come to you.
+  * If you finish quickly - help your neighbours.
+
+<img src="images/hand-up.webp" style="width: 40%; object-fit: contain;">
+
+</div>
+
+<aside class="notes">
+
+  * Practice raising hands
+  * Introduce yourself to your neighbours
+    * Name
+    * Beginner/Intermediate/Expert @ Python
+
+</aside>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### What is Exploratory Data Analysis?
+
+<div style="display: flex;">
+
+* Getting to know the data
+* Asking questions, following leads
+* Testing our assumptions
+* Summaries, plots, relationships
+* Precursor to modelling (statistical inference, machine learning)
+
+<img src="images/detective.webp" style="width: 30%; object-fit: contain;">
+
+</div>
+
+We're going to **learn EDA by doing it!**
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## The Data: <img src="images/inside-airbnb.png" style="width: 30%; margin: 0 0 -0.3em 0;">
+
+<div style="font-size: 0.95em; display: flex;">
+
+* **New Zealand Airbnb listings from [insideairbnb.com](https://insideairbnb.com)**
+* [CC BY 4.0 License](http://creativecommons.org/licenses/by/4.0/)
+* We'll explore a sample of listings from September 2023
+* **Our Goal:** Pricing an Airbnb based on its listing details
+
+<img src="images/inside-airbnb-map.png" style="width: 40%;">
+
+</div>
+
+<aside class="notes">
+
+  * When performing exploratory data analysis, it is very helpful to
+    have a goal in mind
+  * Inside Airbnb collect this data to analyse the impact of short-term
+    Airbnb rentals on residential housing areas
+  * Our eventual goal is to determine a reasonable price for an Airbnb listing,
+    so we'll be interested in exploring relationships between the listing
+    details of an Airbnb and its price.
+
+</aside>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Why <img src="images/python-logo.png" style="height: 1.5em; margin: 0 0 -0.5em 0;"> for EDA?
+
+<div style="font-size: 0.9em;">
+
+* **Many libraries** for data analysis with a **global community**
+* As a **general purpose language**, Python has natural paths for developing your analysis
+  into:
+  * A **web application or API**
+  * An automated **data processing pipeline**
+  * A **machine learning model**
+
+</div>
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Our Tools for Today
+
+<div style="text-align: center;">
+
+<img src="images/jupyter-logo.svg" style="width: 30%;">
+<br>
+<img src="images/pandas-logo.svg" style="width: 30%;">
+<br>
+<img src="images/plotly-logo.png" style="width: 25%;">
+
+</div>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Questions?
+            </textarea>
+          </section>
+
+        </section>
+
+
+        <!-- EXPLORATORY DATA ANALYSIS -->
+        <section>
+
+          <section data-markdown>
+            <textarea data-template>
+# Effective Exploratory Data Analysis
+
+#### A Method for Productively Exploring Data
+            </textarea>
+          </section>
+
+        </section>
+
+
+        <!-- WRAP UP -->
+        <section>
+
+          <section data-markdown>
+            <textarea data-template>
+# Wrap-Up
+            </textarea>
+          </section>
+
+        </section>
+
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+     // More info about initialization & config:
+     // - https://revealjs.com/initialization/
+     // - https://revealjs.com/config/
+     Reveal.initialize({
+       hash: true,
+
+       // Learn about plugins: https://revealjs.com/plugins/
+       plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+     });
+    </script>
+  </body>
+</html>
