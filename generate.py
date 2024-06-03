@@ -71,15 +71,8 @@ def main():
                 flags=re.DOTALL,
             )
 
-        nb_tutorial_content = tutorial_content
-        # Remove speaker notes from notebook
-        nb_tutorial_content = re.sub(
-            re_cell('speaker-notes'),
-            '',
-            nb_tutorial_content,
-        )
         # Expand practice into practice-input and practice-output
-        nb_tutorial_content = re.sub(
+        tutorial_content = re.sub(
             re_cell('practice'),
             r'''
 :::::: {.practice-input}
@@ -90,6 +83,28 @@ def main():
 :::::: {.practice-output}
 \g<cell>
 ::::::
+            ''',
+            tutorial_content,
+        )
+
+        # === Tutorial Notebook ===
+        nb_tutorial_content = tutorial_content
+        # Remove speaker notes from notebook
+        nb_tutorial_content = re.sub(
+            re_cell('speaker-notes'),
+            '',
+            nb_tutorial_content,
+        )
+        # Replace hints with <details> element
+        nb_tutorial_content = re.sub(
+            re_cell('hint'),
+            r'''
+<details>
+<summary>Hint</summary>
+
+\g<cell>
+
+</details>
             ''',
             nb_tutorial_content,
         )
@@ -107,7 +122,7 @@ def main():
             r'''
 :::::: {.cell .markdown}
 <details>
-<summary>Reveal correct code</summary>
+<summary>Reveal model answer</summary>
 \g<cell>
 </details>
 ::::::
@@ -115,22 +130,43 @@ def main():
             nb_tutorial_content,
         )
 
-        # Generate notebook
-        notebook_path = str(tutorial_dir / f'python_eda_{tutorial_dir.name}.ipynb')
-        subprocess.run(
-            [
-                'pandoc', '-s',
-                '-o', notebook_path,
-                '-f', 'markdown',
-            ],
-            check=True,
-            text=True,
-            input=nb_tutorial_content,
+        # === Runnable Notebook ===
+        nb_runnable_content = tutorial_content
+        # Remove practice-input
+        nb_runnable_content = re.sub(
+            re_cell('practice-input'),
+            '',
+            nb_runnable_content,
         )
-        # Quick fix for `"execution_count": null` that JupyterLite doesn't like.
-        subprocess.run([
-            f'''jq '.cells[] |= if has("execution_count") then .execution_count = 0 else . end' {notebook_path} > {notebook_path}.tmp && mv {notebook_path}.tmp {notebook_path}''',
-        ], check=True, shell=True)
+        # Make practice-output runnable
+        nb_runnable_content = re.sub(
+            re_cell('practice-output'),
+            r'''
+\g<cell>
+            ''',
+            nb_runnable_content,
+        )
+
+        # Generate notebooks
+        notebooks = {
+            (tutorial_dir / f'python_eda_{tutorial_dir.name}.ipynb'): nb_tutorial_content,
+            (tutorial_dir / f'python_eda_{tutorial_dir.name}_runnable.ipynb'): nb_runnable_content,
+        }
+        for notebook_path, notebook_content in notebooks.items():
+            subprocess.run(
+                [
+                    'pandoc', '-s',
+                    '-o', str(notebook_path),
+                    '-f', 'markdown',
+                ],
+                check=True,
+                text=True,
+                input=notebook_content,
+            )
+            # Quick fix for `"execution_count": null` that JupyterLite doesn't like.
+            subprocess.run([
+                f'''jq '.cells[] |= if has("execution_count") then .execution_count = 0 else . end' {notebook_path} > {notebook_path}.tmp && mv {notebook_path}.tmp {notebook_path}''',
+            ], check=True, shell=True)
 
 if __name__ == '__main__':
     main()

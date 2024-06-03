@@ -42,6 +42,8 @@ First: Show answers to last part's exercises
 * Filtering and computing exercises
   * ~10 mins
   * Then show correct answers for some
+  * Plots of price against accommodates and review_scores_rating will
+    be better after this cleaning
 
 ## Presentation: Exploratory Data Analysis (16:20 - 16:40)
 
@@ -62,10 +64,13 @@ First: Show answers to last part's exercises
 
 * Colours and facets in plotly
 * Groupby in pandas
+* Plots
+  * https://plotly.com/python/box-plots/ can be better than histograms for groups
 * Grouping exercises
   * ~10 mins
   * Then show correct answers for some
 * Exporting CSVs
+* Adding markdown cells
 * Exporting HTML files
 
 ## Finale (17:40 - 18:00)
