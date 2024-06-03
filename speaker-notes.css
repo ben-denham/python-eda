@@ -1,0 +1,9 @@
+.speaker-notes {
+    border: 2px solid black;
+    display: inline-block;
+    padding: 0 1em;
+}
+
+.practice-input {
+    display: none;
+}
