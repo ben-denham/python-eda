@@ -1,3 +1,12 @@
+## Speaker Notes
+
+### [Tutorial 1: Loading and Visualising](tutorial_1/speaker_notes.html)
+
+### [Tutorial 2: Filtering and Transforming](tutorial_2/speaker_notes.html)
+
+### [Tutorial 3: Grouping and Presenting](tutorial_3/speaker_notes.html)
+
+
 ## Notebook Outputs
 
 When updating the notebooks in this repo that are shared with
