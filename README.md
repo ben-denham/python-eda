@@ -11,5 +11,3 @@ Python** workshop.
 
 ### [Tutorial 3: Grouping and Presenting](https://colab.research.google.com/github/ben-denham/python-eda/blob/main/tutorial_3/python_eda_tutorial_3.ipynb)
 
-
-## [Slides](slides/index.html)

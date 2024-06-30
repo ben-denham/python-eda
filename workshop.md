@@ -72,6 +72,10 @@ First: Show answers to last part's exercises
 * Exporting CSVs
 * Adding markdown cells
 * Exporting HTML files
+  * Download ipynb
+  * Upload ipynb
+  * `!jupyter nbconvert --to html FILE.ipynb`
+  * Download html
 
 ## Finale (17:40 - 18:00)
 
@@ -85,3 +89,22 @@ First: Show answers to last part's exercises
 
 * Indexes
 * Organising code with functions
+* Correlation stats
+* Some kind of manual density matrix:
+
+```
+df = listings_df[[
+    'price_nzd',
+    'accommodates',
+    'review_scores_rating',
+    'number_of_reviews',
+]].stack().reset_index(level=1).rename(columns={0: 'value', 'level_1': 'attribute'})
+
+px.density_heatmap(
+    df.join(df, lsuffix='_x', rsuffix='_y'),
+    x='value_x',
+    y='value_y',
+    facet_col='attribute_x',
+    facet_row='attribute_y',
+)
+```

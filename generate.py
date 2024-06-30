@@ -26,6 +26,11 @@ Example special syntax for tutorials:
 :::::: {.speaker-notes}
 Only seen in the speaker notes
 ::::::
+
+# Shown in speaker-notes, hidden behind a dropdown in notebook
+:::::: {.hint}
+Hint that is hidden by default.
+::::::
 """
 
 from pathlib import Path
