@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Python EDA - Tutorial 2: Filtering and Transforming</title>
+  <title>Python EDA - Tutorial 2: Transforming and Filtering</title>
   <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,10 +34,388 @@ display: none;
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Python EDA - Tutorial 2: Filtering and
-Transforming</h1>
+<h1 class="title">Python EDA - Tutorial 2: Transforming and
+Filtering</h1>
 </header>
-<h1 id="tutorial-2-filtering-and-transforming">Tutorial 2: Filtering and
-Transforming</h1>
+<h1 id="tutorial-2-transforming-and-filtering">Tutorial 2: Transforming
+and Filtering</h1>
+<div class="speaker-notes">
+<p>When we get some data to analyse, it almost always requires a bit of
+preparation or <em>cleaning</em> before we can work productively with
+it.</p>
+<p>We’re now going to look at the tools Pandas gives us for:</p>
+<ul>
+<li>Transforming data - allowing us to calculate new columns and fix
+incorrect values and formats</li>
+<li>Filtering data - to discard data we aren’t interested in
+analysing</li>
+</ul>
+</div>
+<p>In this tutorial you will:</p>
+<ul>
+<li>Learn about Pandas’ core types and column data types</li>
+<li>Transform columns to clean your data and compute new columns</li>
+<li>Use Boolean conditions on columns to filter DataFrame rows</li>
+</ul>
+<div class="speaker-notes">
+<p>We’ll run this first cell to import Pandas and Plotly, and to load
+our DataFrame of listings in this notebook.</p>
+</div>
+<pre class="code"><code>%pip install pandas plotly nbformat
+
+import pandas as pd
+import plotly.express as px
+
+listings_df = pd.read_csv(&#39;https://ben-denham.github.io/python-eda/data/inside_airbnb_listings_nz_2023_09.csv&#39;)
+
+listings_df</code></pre>
+<h2 id="data-types-in-pandas">Data Types in Pandas</h2>
+<p>What is the <em>type</em> of a table of data?</p>
+<pre class="code"><code>type(listings_df)</code></pre>
+<p>What is the <em>type</em> of an individual column?</p>
+<pre class="code"><code>type(listings_df[&#39;room_type&#39;])</code></pre>
+<div class="speaker-notes">
+<ul>
+<li>A tabular <em>DataFrame</em> is made up of many column
+<em>Series</em>.</li>
+<li>Pandas provides many functions, methods, and operations for working
+with both DataFrames and Series</li>
+<li>A particular function or method <strong>may work for both a
+DataFrame or a Series</strong>, but the <em>behaviour</em> of that
+function or method can be quite different for each type</li>
+<li>It is therefore very important to <strong>always be aware of whether
+we’re dealing with a DataFrame or a Series</strong></li>
+</ul>
+</div>
+<p>Check the data type of each column in the DataFrame:</p>
+<div class="practice">
+<pre class="code"><code>listings_df.info()</code></pre>
+</div>
+<div class="speaker-notes">
+<p>Notice that:</p>
+<ul>
+<li>Even though the CSV provided no data type information, numeric types
+have been automatically inferred by Pandas</li>
+<li>Non-numeric types like strings are listed as <code>object</code> (we
+only have strings here)</li>
+<li><strong>Types aren’t always what we want</strong> - the
+<code>last_review</code> column should be a <code>datetime</code></li>
+</ul>
+</div>
+<h2 id="transforming-data">Transforming Data</h2>
+<p>We can convert a column with datetime-like strings to have a datetime
+data type:</p>
+<div class="practice-input">
+<pre class="code"><code>listings_df[&#39;last_review&#39;]</code></pre>
+</div>
+<div class="practice-output">
+<pre class="code"><code>pd.to_datetime(listings_df[&#39;last_review&#39;])</code></pre>
+</div>
+<div class="speaker-notes">
+<p>We can replace a column by assigning a new Series to it, just like we
+would with a Python variable.</p>
+</div>
+<p>Replace the <code>last_review</code> column with a new Series with a
+datetime data type:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[&#39;last_review&#39;] = pd.to_datetime(listings_df[&#39;last_review&#39;])</code></pre>
+</div>
+<p>Check that the <code>last_review</code> column now has the correct
+data type:</p>
+<pre class="code"><code>listings_df.info()</code></pre>
+<h3 id="maths-with-columns">Maths with columns</h3>
+<div class="speaker-notes">
+<p>Applying standard Python maths operators on a Series performs the
+operation on each value in the Series and returns a new Series.</p>
+</div>
+<p>Convert listing prices to Australian dollars:</p>
+<div class="practice-input">
+<pre class="code"><code>nzd_to_aud = 0.93
+
+listings_df[&#39;price_nzd&#39;]</code></pre>
+</div>
+<div class="practice-output">
+<pre class="code"><code>nzd_to_aud = 0.93
+
+listings_df[&#39;price_nzd&#39;] * nzd_to_aud</code></pre>
+</div>
+<div class="speaker-notes">
+<p>Performing maths with two Series applies the operation
+<em>element-wise</em> to each pair of values from the two Series.</p>
+<p>Also note that we can add new columns to the end of our DataFrame by
+assigning to a column that doesn’t already exist in the DataFrame.</p>
+</div>
+<p>Add a <code>price_per_person</code> column to
+<code>listings_df</code>:</p>
+<div class="practice-input">
+<pre class="code"><code>listings_df[&#39;price_per_person&#39;] =
+
+listings_df</code></pre>
+</div>
+<div class="practice-output">
+<pre class="code"><code>listings_df[&#39;price_per_person&#39;] = listings_df[&#39;price_nzd&#39;] / listings_df[&#39;accommodates&#39;]
+
+listings_df</code></pre>
+</div>
+<h3 id="applying-functions-to-dataframes">Applying Functions to
+DataFrames</h3>
+<div class="speaker-notes">
+<p>While Pandas provides many more functions for transforming DataFrames
+and Series, it is still often convenient to express a transformation as
+plain-old-Python code applied to a single value or row.</p>
+<p>We can do this by writing our transformation as a regular Python
+function and then <em>applying</em> it to a Series or DataFrame.</p>
+<p>For example, the function below can transform a single listing’s ID
+into a URL for the listing:</p>
+</div>
+<p>The following function transforms a listing ID into a URL:</p>
+<pre class="code"><code>def id_to_url(id):
+    numeric_id = id.removeprefix(&#39;l&#39;)
+    return f&#39;https://www.airbnb.co.nz/rooms/{numeric_id}&#39;
+
+id_to_url(&#39;l11909616&#39;)</code></pre>
+<div class="speaker-notes">
+<p>Calling <code>.apply(id_to_url)</code> on a single column Series
+calls the function with each value in the Series and uses the returned
+values to construct a new Series.</p>
+</div>
+<p>Produce a series of listing URLs:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[&#39;id&#39;].apply(id_to_url)</code></pre>
+</div>
+<div class="speaker-notes">
+<p>We can also use <code>.apply()</code> with
+<code>axis=&#39;columns&#39;</code> on an entire DataFrame to pass an entire row
+at a time to the function.</p>
+<p>The output will still be a single Series of the returned values.</p>
+<p>The <code>row</code> passed into the function will be a Series
+representing a single row in the DataFrame.</p>
+<p>We can access the row’s value for each column in the same way we
+access columns in a DataFrame.</p>
+</div>
+<p>The following function produces a description from a listing row:</p>
+<pre class="code"><code>def listing_to_description(row):
+    room_type = row[&#39;room_type&#39;]
+    host_name = row[&#39;host_name&#39;]
+    return f&#39;{room_type} by {host_name}&#39;</code></pre>
+<p>Produce a Series of listing descriptions:</p>
+<div class="practice">
+<pre class="code"><code>listings_df.apply(listing_to_description, axis=&#39;columns&#39;)</code></pre>
+</div>
+<div class="speaker-notes">
+<p>One important point to know about <code>.apply()</code> is that
+<strong>Pandas built-in operations will often be much faster</strong>
+than running plain-old-Python on each row.</p>
+<p>However, this often won’t make much of a difference until you’re
+dealing with hundreds of thousands or millions of rows. And remember,
+when exploring the data it’s <strong>most important for you to be able
+to quickly translate your ideas into working code!</strong></p>
+</div>
+<h2 id="filtering-rows">Filtering Rows</h2>
+<div class="speaker-notes">
+<p>The first step to filtering the rows in a DataFrame is to specify the
+conditions we want to filter by.</p>
+<p>Using a comparison operator on a Series performs the comparison to
+each value in the Series and returns a new Series full of Boolean
+values.</p>
+<p>A Boolean Series like this is commonly called a <em>mask</em></p>
+</div>
+<p>Construct a <em>Boolean Series</em> that is <code>True</code> for
+listings in <code>&#39;Wellington City&#39;</code>:</p>
+<div class="practice-input">
+<pre class="code"><code>wellington_mask =</code></pre>
+</div>
+<div class="practice-output">
+<pre class="code"><code>wellington_mask = listings_df[&#39;region_parent_name&#39;] == &#39;Wellington City&#39;</code></pre>
+</div>
+<div class="speaker-notes">
+<p>We can use the mask to return a new DataFrame that is filtered to
+contain only the rows where the mask is <code>True</code>:</p>
+</div>
+<p>Use the <code>wellington_mask</code> to get a DataFrame of listings
+in Wellington:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[wellington_mask]</code></pre>
+</div>
+<div class="speaker-notes">
+<ul>
+<li>To view the unmatched rows, we’ll want to <em>invert</em> the mask
+<ul>
+<li><code>False</code> becomes <code>True</code> and <code>True</code>
+becomes <code>False</code></li>
+</ul></li>
+<li>We can’t just use Python’s <code>not</code> operator, instead we
+have to use the tilde operator
+<ul>
+<li>Aside: This is because the behaviour of Python’s Boolean operators
+can’t be overridden by Pandas</li>
+</ul></li>
+</ul>
+</div>
+<p>Use the <code>wellington_mask</code> to get a DataFrame of listings
+NOT in Wellington:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[~wellington_mask]</code></pre>
+</div>
+<div class="practice">
+<p>Note: Similar to <code>null</code> values in SQL, conditions on
+<code>NaN</code> values always evaluate to <code>False</code>.</p>
+</div>
+<h3 id="combining-filters">Combining Filters</h3>
+<div class="speaker-notes">
+<p>Using Boolean operators to combine masks is a powerful way to build
+up complex filtering conditions.</p>
+<p>Just like how we have to use tilde instead of <code>not</code> for
+inversion, we need to use <code>&amp;</code> instead of <code>and</code>
+and <code>|</code> instead of <code>or</code>.</p>
+</div>
+<p>Construct a <em>Boolean Series</em> that is <code>True</code> for
+listings that cost less than $100 per night:</p>
+<pre class="code"><code>cheap_mask = listings_df[&#39;price_nzd&#39;] &lt;= 100
+
+cheap_mask</code></pre>
+<p>Find cheap listings in Wellington:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[wellington_mask | cheap_mask]</code></pre>
+</div>
+<p>Find listings that are either cheap OR in Wellington:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[wellington_mask &amp; cheap_mask]</code></pre>
+</div>
+<div class="speaker-notes">
+<p>The tools for transforming and filtering data we’ve used here are the
+kind of code you’ll spend much of your time writing when analysing data
+with Pandas.</p>
+<p>The next set of exercises will give you an opportunity to start
+applying these tools to clean up and analyse the data.</p>
+</div>
+<h1 id="practice-exercises">Practice Exercises</h1>
+<h2 id="analysing-listing-ratings">1. Analysing listing ratings</h2>
+<h3 id="a.-plotting-the-ratings">1a. Plotting the ratings</h3>
+<p>Guests may review a listing on a scale of 0 to 5 stars, and the mean
+of those reviews is recorded as the <em>rating</em> of the listing.</p>
+<p>We’d like to get an idea of the distribution of the typical ratings
+of listings, so your first task is to plot a histogram of the
+<code>review_scores_rating</code> column:</p>
+<div class="practice">
+<pre class="code"><code>px.histogram(listings_df, x=&#39;review_scores_rating&#39;)</code></pre>
+</div>
+<h3 id="b.-thinking-about-distribution-spikes">1b. Thinking about
+distribution spikes</h3>
+<p>In your histogram, you should see that the smooth-ish shape of the
+distribution is broken up by a series of spikes, especially around the
+exact ratings of 0, 1, 2, 3, and 4. Why do you think that may be?</p>
+<div class="hint">
+<p>Listings with a small number of reviews are more likely to have a
+rating that is either an exact number of stars or a simple ratio. For
+example, a listing with a single review must have a rating that is equal
+to the exact number of stars of its only review!</p>
+<p>When considering summary statistics (like an average rating) it is
+important to consider how many data points have made up that
+statistic.</p>
+</div>
+<h3 id="c.-plotting-filtered-data">1c. Plotting filtered data</h3>
+<p>Let’s seen what the distribution looks like if we ignore listings
+with few reviews.</p>
+<p>Plot a histogram of listings that have more than 100 reviews:</p>
+<div class="practice">
+<pre class="code"><code>px.histogram(listings_df[listings_df[&#39;number_of_reviews&#39;] &gt; 100], x=&#39;review_scores_rating&#39;)</code></pre>
+</div>
+<p>Does plotting only listings with a large number of reviews reveal any
+other insights about the data?</p>
+<div class="hint">
+<p>No listing with more than 100 reviews has a rating less than 4.0
+stars.</p>
+</div>
+<h2 id="transforming-and-filtering-practice">2. Transforming and
+Filtering Practice</h2>
+<p>Combine the techniques we’ve learned in the last two tutorials to
+answer these questions:</p>
+<h3 id="a.-what-is-the-lowest-cost-booking-i-could-make">2a. What is the
+lowest cost booking I could make?</h3>
+<p>Note: Each listing has a minimum number of nights that you must book
+for (recorded in the <code>minimum_nights</code> column).</p>
+<div class="practice">
+<pre class="code"><code>base_prices = listings_df[&#39;price_nzd&#39;] * listings_df[&#39;minimum_nights&#39;]
+base_prices.min()</code></pre>
+</div>
+<div class="hint">
+<p>You may find it helpful to multiply two columns and use
+<code>.min()</code> as part of your answer.</p>
+</div>
+<h3 id="b.-which-parent-region-has-more-affordable-listings-on-average-auckland-or-wellington-city">2b.
+Which parent region has more affordable listings on average, Auckland or
+Wellington City?</h3>
+<div class="practice">
+<pre class="code"><code>auckland_listings_df = listings_df[listings_df[&#39;region_parent_name&#39;] == &#39;Auckland&#39;]
+print(auckland_listings_df[&#39;price_nzd&#39;].mean())
+
+wellington_listings_df = listings_df[listings_df[&#39;region_parent_name&#39;] == &#39;Wellington City&#39;]
+print(wellington_listings_df[&#39;price_nzd&#39;].mean())</code></pre>
+</div>
+<div class="hint">
+<p>You may find it helpful to use filters and <code>.mean()</code> as
+part of your answer.</p>
+</div>
+<p><strong>Extra:</strong> The term “affordable” is subject to
+interpretation here - is a listing more affordable if it can accommodate
+more people for the same price? Does your answer change depending on
+your interpretation of affordable?</p>
+<h2 id="extra-for-experts---data-cleaning">3. Extra for Experts - Data
+Cleaning</h2>
+<p>Pandas DataFrames and Series have many other methods that apply
+useful transformations. You can find references for them at these
+links:</p>
+<ul>
+<li>https://pandas.pydata.org/pandas-docs/stable/reference/frame.html</li>
+<li>https://pandas.pydata.org/pandas-docs/stable/reference/series.html</li>
+</ul>
+<p>Try using some of them to perform the data cleaning tasks below.</p>
+<h3 id="a.-filter-out-listings-that-are-missing-a-rating">3a. Filter out
+listings that are missing a rating</h3>
+<p>Use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html"><code>.isna()</code></a>
+Series method to find listings that are missing a rating (i.e. the
+rating is <code>NaN</code>).</p>
+<div class="practice">
+<pre class="code"><code>reviewed_listings_df = listings_df[~(listings_df[&#39;review_scores_rating&#39;].isna())]
+
+reviewed_listings_df</code></pre>
+</div>
+<h3 id="b.-add-a-filled_rating-column-to-listings_df-that-fills-in-missing-ratings-with-the-mean-rating">3b.
+Add a <code>filled_rating</code> column to <code>listings_df</code> that
+fills in missing ratings with the mean rating</h3>
+<p>Use the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.fillna.html"><code>.fillna()</code></a>
+Series method to replace missing values in a Series with a given
+value.</p>
+<div class="practice">
+<pre class="code"><code>rating_mean = listings_df[&#39;review_scores_rating&#39;].mean()
+listings_df[&#39;filled_rating&#39;] = listings_df[&#39;review_scores_rating&#39;].fillna(rating_mean)</code></pre>
+</div>
+<blockquote>
+<p>Filling in missing values with an average value can
+<em>sometimes</em> be a useful technique for applying machine learning
+models that cannot work when some data values are missing.</p>
+</blockquote>
+<h3 id="c.-convert-formatted-price-strings-to-numeric-values">3c.
+Convert formatted price strings to numeric values</h3>
+<p>The original Inside Airbnb dataset provides each price as a formatted
+string starting with a <code>$</code> and containing commas. The
+original formatted values are retained in the
+<code>formatted_price</code> column.</p>
+<p>Your task is to transform the <code>formatted_price</code> column
+into a numeric <code>float</code> data type, just like the
+<code>price_nzd</code> column.</p>
+<p>You may like to use the <code>.apply()</code> used in the tutorial,
+or try using the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.replace.html"><code>.str.replace()</code></a>
+and <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.astype.html"><code>.astype()</code></a>
+Series methods.</p>
+<div class="practice">
+<pre class="code"><code>(
+    listings_df[&#39;formatted_price&#39;]
+    .str.replace(&#39;$&#39;, &#39;&#39;, regex=False)
+    .str.replace(&#39;,&#39;, &#39;&#39;, regex=False)
+    .astype(float)
+)</code></pre>
+</div>
 </body>
 </html>

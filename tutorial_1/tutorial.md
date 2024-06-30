@@ -24,7 +24,7 @@ jupyter:
 In this tutorial you will:
 
 1. Learn how to run Python code in Jupyter notebooks
-2. Load the CSV of Airbnb listings into a Pandas DataFrame
+2. Load a CSV file of Airbnb listings into a Pandas DataFrame
 3. Use Pandas methods to calculate summary statistics of listing attributes
 4. Use Plotly to produce simple plots to visualise the listings
 
@@ -154,8 +154,8 @@ listings_df.sort_values('review_scores_rating')
 ::::::
 
 :::::: {.speaker_notes}
-**This doesn't change the original DataFrame**, it produced a new
-DataFrame that is sorted
+**This doesn't change the original DataFrame**, it returns a new
+DataFrame that is sorted.
 
 Notice that the ratings sorted "last" are `NaN` (aka `null` or `None`
 or "missing"). **By default `sort_values()` puts all `NaN` values at
@@ -282,13 +282,13 @@ px.scatter(listings_df, x='longitude', y='latitude')
 
 :::::: {.speaker-notes}
 See how easy it is to plot our data.
+::::::
 
 Plotly Express makes such plots easy when we have *tidy data* - that is:
 
 * Each row is an *observation* or *data point* to plot
 * Each column is an *attribute* or *feature* describing some aspect of an observation
 * Each cell contains only a single value
-::::::
 
 Plot the *distribution* of listing prices:
 
@@ -398,7 +398,24 @@ This might be important to consider if we plan to use review
 scores to predict the price of an expensive listing.
 ::::::
 
-## 3. Extra for Experts
+## 3. Extra for Experts - Plot Types
+
+Choosing the right type of plot is important. For example, say we want
+to look at the relationship between the price of reasonably-priced
+listings (less than $500 per night) and how many people it
+accommodates. The following scatter plot doesn't give us much insight
+because the points overlap too much:
+
+```code
+px.scatter(listings_df, x='accommodates', y='price_nzd', range_y=[0, 500])
+```
+
+However, a heatmap can help us more easily see the relationship by
+representing the number of points in each cell with colour:
+
+```code
+px.density_heatmap(listings_df, x='accommodates', y='price_nzd', range_y=[0, 500], nbinsy=2000)
+```
 
 Try out some other plot types from: https://plotly.com/python/plotly-express/
 

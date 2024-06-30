@@ -41,7 +41,7 @@ Visualising</h1>
 <p>In this tutorial you will:</p>
 <ol type="1">
 <li>Learn how to run Python code in Jupyter notebooks</li>
-<li>Load the CSV of Airbnb listings into a Pandas DataFrame</li>
+<li>Load a CSV file of Airbnb listings into a Pandas DataFrame</li>
 <li>Use Pandas methods to calculate summary statistics of listing
 attributes</li>
 <li>Use Plotly to produce simple plots to visualise the listings</li>
@@ -144,7 +144,7 @@ shown</p>
 </div>
 <div class="speaker_notes">
 <p><strong>This doesn’t change the original DataFrame</strong>, it
-produced a new DataFrame that is sorted</p>
+returns a new DataFrame that is sorted.</p>
 <p>Notice that the ratings sorted “last” are <code>NaN</code> (aka
 <code>null</code> or <code>None</code> or “missing”). <strong>By default
 <code>sort_values()</code> puts all <code>NaN</code> values at the end,
@@ -225,6 +225,7 @@ our data to give us a clearer picture.</p>
 </div>
 <div class="speaker-notes">
 <p>See how easy it is to plot our data.</p>
+</div>
 <p>Plotly Express makes such plots easy when we have <em>tidy data</em>
 - that is:</p>
 <ul>
@@ -234,7 +235,6 @@ plot</li>
 some aspect of an observation</li>
 <li>Each cell contains only a single value</li>
 </ul>
-</div>
 <p>Plot the <em>distribution</em> of listing prices:</p>
 <div class="speaker-notes">
 <p>A histogram can show us the <em>distribution</em> or <em>shape</em>
@@ -314,7 +314,17 @@ reviews.</p>
 <p>This might be important to consider if we plan to use review scores
 to predict the price of an expensive listing.</p>
 </div>
-<h2 id="extra-for-experts">3. Extra for Experts</h2>
+<h2 id="extra-for-experts---plot-types">3. Extra for Experts - Plot
+Types</h2>
+<p>Choosing the right type of plot is important. For example, say we
+want to look at the relationship between the price of reasonably-priced
+listings (less than $500 per night) and how many people it accommodates.
+The following scatter plot doesn’t give us much insight because the
+points overlap too much:</p>
+<pre class="code"><code>px.scatter(listings_df, x=&#39;accommodates&#39;, y=&#39;price_nzd&#39;, range_y=[0, 500])</code></pre>
+<p>However, a heatmap can help us more easily see the relationship by
+representing the number of points in each cell with colour:</p>
+<pre class="code"><code>px.density_heatmap(listings_df, x=&#39;accommodates&#39;, y=&#39;price_nzd&#39;, range_y=[0, 500], nbinsy=2000)</code></pre>
 <p>Try out some other plot types from:
 https://plotly.com/python/plotly-express/</p>
 <p>For example, try making a 3D scatter plot between 3 columns:
