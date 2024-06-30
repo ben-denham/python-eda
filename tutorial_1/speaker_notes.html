@@ -294,8 +294,23 @@ could further confirm this by plotting a histogram.</p>
 “typical” minimum number of nights.</p>
 </div>
 <h2 id="plotting-practice">2. Plotting Practice</h2>
-<p>Investigating relationships between variables is an incredibly
-important part of exploratory data analysis.</p>
+<h3 id="a.-plot-the-frequencies-of-room-types">2a. Plot the frequencies
+of room types</h3>
+<p>In Plotly, we can use histograms to plot the frequencies of values in
+<em>categorical</em> columns (e.g. string labels or integers) as well as
+<em>continuous</em> columns (e.g. numbers with a decimal point).</p>
+<p>Plot a histogram of the categorical room type column.</p>
+<div class="hint">
+<p>Call <code>px.histogram</code> with <code>x</code> set to the
+<code>room_type</code> column.</p>
+</div>
+<div class="practice">
+<pre class="code"><code>px.histogram(listings_df, x=&#39;room_type&#39;)</code></pre>
+</div>
+<h3 id="b.-plot-the-relationship-between-price-and-number-of-reviews">2b.
+Plot the relationship between price and number of reviews</h3>
+<p>Investigating relationships between attributes (columns) is an
+incredibly important part of exploratory data analysis.</p>
 <p>Construct a scatter plot that shows the relationship between the
 listing’s price and its number of reviews (you may need to zoom in on
 the plot).</p>

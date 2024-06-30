@@ -304,9 +304,214 @@ We're going to **learn EDA by doing it!**
 
           <section data-markdown>
             <textarea data-template>
-# Effective Exploratory Data Analysis
+# How to Productively Explore Data
 
-#### A Method for Productively Exploring Data
+### Inspired by: [R for Data Science - Exploratory Data Analysis](https://r4ds.hadley.nz/eda)
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+
+#### There is no one process that fits all datasets!
+
+<img src="images/guidelines.webp" width="80%">
+
+#### The ideas here may help you structure your process
+
+<aside class="notes">
+</aside>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+
+## Gotta iterate fast!
+
+<div style="display: flex; font-size: 0.8em;">
+
+1. <!-- .element class="fragment" --><strong>Ask questions</strong>
+   * Brainstorm lots of them
+   * Having a goal helps
+2. <!-- .element class="fragment" --><strong>Get answers</strong>
+   * The faster the better
+   * Familiarity with your tools helps
+3. <!-- .element class="fragment" --><strong>Document your findings</strong>
+   * For others, but especially for future you!
+4. <!-- .element class="fragment" --><strong>From what you learn, ask more questions</strong>
+5. <!-- .element class="fragment" --><strong>Clean your code!</strong>
+   * Lay a solid foundation for the next iteration
+   * Rename variables, write functions, add comments
+
+  <img src="images/sonic.gif" style="width: 300px; object-fit: contain;">
+
+</div>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+<img src="images/adam-science.gif" width="100%">
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## But what kinds of questions?
+
+<div style="font-size: 1em;">
+
+1. <!-- .element class="fragment" -->What <strong><em>variation</em></strong> can I see within this column?
+   * Use summary statistics, plots of distribution
+2. <!-- .element class="fragment" -->What <strong><em>covariation</em></strong> can I see between these columns?
+   * Start with pairs of columns - e.g. scatter plots
+   * The first step to **predicting one column from another** or
+     **establishing a causal relationship**
+
+</div>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Variation within one column: Histograms / Bars
+
+<div style="display: flex; margin-top: 0.8em;">
+  <div>
+    <h4 style="margin: 0;">Continuous Values</h4>
+    <div style="font-size: 0.7em;">(numbers with decimal points)</div>
+    <img style="margin: 0;" src="images/histogram-continuous.png">
+  </div>
+  <div>
+    <h4 style="margin: 0;">Categorical Values</h4>
+    <div style="font-size: 0.7em;">(string labels or small sets of integers)</div>
+    <img style="margin: 0;" src="images/histogram-categorical.png">
+  </div>
+</div>
+
+**Tip:** Try several bin widths for continuous columns!
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Distribution follow-up questions
+
+* <!-- .element class="fragment" --><strong>Which values are common or rare? Why?</strong>
+  * E.g. If most ratings are above 4.0, 4.1 is pretty bad
+  * E.g. Are outlier prices correct? Are they relevant?
+* <!-- .element class="fragment" --><strong>Any unusual patterns? What might explain them?</strong>
+  * E.g. Spikes at whole-numbered ratings
+* <!-- .element class="fragment" --><strong>Any apparent subgroups/clusters of points?</strong>
+  * How are clusters similar and how do they differ?
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Covariation: Continuous vs Continuous
+
+<div style="display: flex; margin-top: 0.8em;">
+  <div>
+    <h4 style="margin: 0;">Scatter Plots</h4>
+    <img style="margin: 0;" src="images/scatter.png">
+  </div>
+  <div>
+    <h4 style="margin: 0;">Heat Maps</h4>
+    <img style="margin: 0;" src="images/heatmap.png">
+  </div>
+</div>
+
+**Tip:** Make overlapping scatter points more visible with
+transparency or random jitter to point positions
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Covariation: Continuous vs Categorical
+
+<div style="display: flex; margin-top: 0.8em;">
+  <div style="width: 37%;">
+    <h4 style="margin: 0;">Hist with color</h4>
+    <img style="margin: 0;" src="images/cont-vs-cat-colour.png">
+  </div>
+  <div style="width: 25%;">
+    <h4 style="margin: 0;">Subplots</h4>
+    <img style="margin: 0;" src="images/cont-vs-cat-subplots.png">
+  </div>
+  <div style="width: 37%;">
+    <h4 style="margin: 0;">Box Plot</h4>
+    <img style="margin: 0;" src="images/cont-vs-cat-boxplot.png">
+  </div>
+</div>
+
+
+(we'll see similar examples in the next tutorial)
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Covariation: Categorical vs Categorical
+
+<div>
+  <h4 style="margin: 0;">Stacked Bar Chart</h4>
+  <img style="margin: 0; width: 75%;" src="images/stacked-bar-chart.png">
+</div>
+
+<div>
+  <h4 style="margin: 0;">Heat Map</h4>
+  <img style="margin: 0; width: 75%;" src="images/categorical-heatmap.png">
+</div>
+
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Follow-up questions from covariation plots
+
+* **How can you describe the relationship?**
+* **How strong is the relationship?**
+* **What other variables might affect it?**
+* **Does the relationship change for subgroups?**
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+## Common gotchas
+
+<div style="font-size: 0.9em;">
+
+* <!-- .element class="fragment" --><strong>Pay attention to missing values</strong>
+  * `NaN`s are omitted from plots, but may be important
+* <!-- .element class="fragment" --><strong>Check data quality</strong>
+  * Test even your most basic assumptions
+* <!-- .element class="fragment" --><strong>Be cautious testing hypotheses suggested by the data</strong>
+  * If 1/100 columns is correlated, is it a coincidence?
+* <!-- .element class="fragment" --><strong>Always be skeptical</strong>
+  * Is this pattern or apparent clustering a coincidence? An
+    artifact of the data collection process?
+
+</div>
+
+            </textarea>
+          </section>
+
+          <section data-markdown>
+            <textarea data-template>
+### Enough talking, let's get back to doing!
+
+<img src="images/onward.gif" width="100%">
             </textarea>
           </section>
 
@@ -318,7 +523,7 @@ We're going to **learn EDA by doing it!**
 
           <section data-markdown>
             <textarea data-template>
-# Wrapping Up
+<img src="images/wrap-up.gif" width="100%">
             </textarea>
           </section>
 
@@ -390,7 +595,7 @@ We're going to **learn EDA by doing it!**
 * All of today's helpers!
 * Sources:
   * [Software Carpentry - Plotting and Programming in Python](https://swcarpentry.github.io/python-novice-gapminder) ([CC-BY 4.0](https://swcarpentry.github.io/python-novice-gapminder/LICENSE.html))
-  * [R for Data Science - Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html)
+  * [R for Data Science - Exploratory Data Analysis](https://r4ds.hadley.nz/eda)
   * [PyNoon Lessons](https://pynoon.github.io/lessons/)
             </textarea>
           </section>

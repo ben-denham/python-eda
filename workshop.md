@@ -47,7 +47,7 @@ First: Show answers to last part's exercises
 
 ## Presentation: Exploratory Data Analysis (16:20 - 16:40)
 
-* https://r4ds.had.co.nz/exploratory-data-analysis.html
+* https://r4ds.hadley.nz/eda
 * Origin / comparison to traditional statistics and modelling
 * Importance of having a goal
 * Iterative workflow
