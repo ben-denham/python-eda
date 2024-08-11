@@ -8,7 +8,7 @@ Example special syntax for tutorials:
 ```
 ::::::
 
-# Rendered as code in speaker-notes, and collapsible section in notebook
+# Rendered as code in speaker-notes, hidden in notebook
 :::::: {.practice-output}
 ```code
 1 + 1
@@ -124,14 +124,7 @@ def main():
         # Convert practice-output into a hidden <details> element.
         nb_tutorial_content = re.sub(
             re_cell('practice-output'),
-            r'''
-:::::: {.cell .markdown}
-<details>
-<summary>Reveal model answer</summary>
-\g<cell>
-</details>
-::::::
-            ''',
+            '',
             nb_tutorial_content,
         )
 
