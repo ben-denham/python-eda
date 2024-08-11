@@ -51,8 +51,10 @@ attributes</li>
 <ul>
 <li><strong>Jupyter notebooks</strong> are a very popular platform for
 Python coding, particularly for data analysis and visualisation.</li>
-<li>We are running Jupyter notebooks in <strong>Google Colab</strong> so
-that you don’t need to install Python or Jupyter on your own computer.
+<li>You can run <strong>Jupyter notebooks</strong> on your own computer,
+but today we are running Jupyter notebooks in <strong>Google
+Colab</strong> so that you don’t need to install Python or Jupyter on
+your own computer.
 <ul>
 <li>Note: Because your notebooks will run on Google’s servers, you
 shouldn’t upload any company data or code you are not authorised to use
@@ -153,13 +155,13 @@ regardless of sort order.</strong></p>
 <code>0</code>. We’ll need to consider how to handle these rating-less
 listings later.</p>
 </div>
-<p>Select a subset of columns from a DataFrame:</p>
-<div class="practice">
-<pre class="code"><code>listings_df[[&#39;latitude&#39;, &#39;longitude&#39;]]</code></pre>
-</div>
-<p>Now extract the <code>name</code> column on its own:</p>
+<p>Extract the <code>name</code> column on its own:</p>
 <div class="practice">
 <pre class="code"><code>listings_df[&#39;name&#39;]</code></pre>
+</div>
+<p>Now select a subset of columns from a DataFrame:</p>
+<div class="practice">
+<pre class="code"><code>listings_df[[&#39;latitude&#39;, &#39;longitude&#39;]]</code></pre>
 </div>
 <h2 id="summary-statistics">Summary Statistics</h2>
 <div class="speaker-notes">
@@ -194,8 +196,8 @@ higher.</p>
 <pre class="code"><code>listings_df[&#39;price_nzd&#39;].max()</code></pre>
 </div>
 <div class="speaker-notes">
-<p>The maximum price looks suspiciously large, this will warrant further
-investigation!</p>
+<p>The maximum price looks suspiciously large for a price per night,
+this will warrant further investigation!</p>
 <p>For categorical values, we can get an initial picture by counting the
 frequency of each distinct value:</p>
 </div>
@@ -260,7 +262,11 @@ not just relying on summary statistics.</p>
 <h1 id="practice-exercises">Practice Exercises</h1>
 <h2 id="dataset-statistics">1. Dataset Statistics</h2>
 <p>Using the methods we’ve looked at so far, answer the following
-questions:</p>
+questions.</p>
+<p>To see what columns you have available in <code>listings_df</code> to
+answer these questions, you can refer to the column names in the table
+that is displayed by running this cell:</p>
+<pre class="code"><code>listings_df</code></pre>
 <h3 id="a.-which-parent-region-has-the-least-listings">1a. Which “parent
 region” has the least listings?</h3>
 <div class="hint">

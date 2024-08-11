@@ -33,8 +33,9 @@ In this tutorial you will:
 :::::: {.speaker-notes}
 * **Jupyter notebooks** are a very popular platform for Python coding,
   particularly for data analysis and visualisation.
-* We are running Jupyter notebooks in **Google Colab** so that you
-  don't need to install Python or Jupyter on your own computer.
+* You can run **Jupyter notebooks** on your own computer, but today we
+  are running Jupyter notebooks in **Google Colab** so that you don't
+  need to install Python or Jupyter on your own computer.
   * Note: Because your notebooks will run on Google's servers, you
     shouldn't upload any company data or code you are not authorised
     to use outside of company-approved systems.
@@ -165,19 +166,19 @@ Indeed, these listings have a `number_of_reviews` equal to `0`. We'll need to
 consider how to handle these rating-less listings later.
 ::::::
 
-Select a subset of columns from a DataFrame:
-
-:::::: {.practice}
-```code
-listings_df[['latitude', 'longitude']]
-```
-::::::
-
-Now extract the `name` column on its own:
+Extract the `name` column on its own:
 
 :::::: {.practice}
 ```code
 listings_df['name']
+```
+::::::
+
+Now select a subset of columns from a DataFrame:
+
+:::::: {.practice}
+```code
+listings_df[['latitude', 'longitude']]
 ```
 ::::::
 
@@ -229,7 +230,7 @@ listings_df['price_nzd'].max()
 ::::::
 
 :::::: {.speaker-notes}
-The maximum price looks suspiciously large,
+The maximum price looks suspiciously large for a price per night,
 this will warrant further investigation!
 
 For categorical values, we can get an initial picture by
@@ -323,7 +324,15 @@ just relying on summary statistics.
 ## 1. Dataset Statistics
 
 Using the methods we've looked at so far, answer the following
-questions:
+questions.
+
+To see what columns you have available in `listings_df` to answer
+these questions, you can refer to the column names in the table that
+is displayed by running this cell:
+
+```code
+listings_df
+```
 
 ### 1a. Which "parent region" has the least listings?
 

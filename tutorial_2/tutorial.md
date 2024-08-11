@@ -170,11 +170,11 @@ Also note that we can add new columns to the end of our DataFrame by
 assigning to a column that doesn't already exist in the DataFrame.
 ::::::
 
-Add a `price_per_person` column to `listings_df`:
+Add a `price_nzd_per_person` column to `listings_df`:
 
 :::::: {.practice-input}
 ```code
-listings_df['price_per_person'] =
+listings_df['price_nzd_per_person'] =
 
 listings_df
 ```
@@ -182,7 +182,7 @@ listings_df
 
 :::::: {.practice-output}
 ```code
-listings_df['price_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
+listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
 
 listings_df
 ```
@@ -205,7 +205,7 @@ into a URL for the listing:
 The following function transforms a listing ID into a URL:
 
 ```code
-def id_to_url(id):
+def id_to_url(id: str) -> str:
     numeric_id = id.removeprefix('l')
     return f'https://www.airbnb.co.nz/rooms/{numeric_id}'
 
@@ -227,6 +227,9 @@ listings_df['id'].apply(id_to_url)
 ::::::
 
 :::::: {.speaker-notes}
+> Note: These are just regular strings, but Colab automatically
+> displays them as hyperlinks because they start with `https://`
+
 We can also use `.apply()` with `axis='columns'` on an entire
 DataFrame to pass an entire row at a time to the function.
 
@@ -326,7 +329,7 @@ listings_df[~wellington_mask]
 ```
 ::::::
 
-:::::: {.practice}
+:::::: {.speaker-notes}
 Note: Similar to `null` values in SQL, conditions on `NaN` values
 always evaluate to `False`.
 ::::::

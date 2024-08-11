@@ -145,15 +145,15 @@ listings_df[&#39;price_nzd&#39;] * nzd_to_aud</code></pre>
 <p>Also note that we can add new columns to the end of our DataFrame by
 assigning to a column that doesn’t already exist in the DataFrame.</p>
 </div>
-<p>Add a <code>price_per_person</code> column to
+<p>Add a <code>price_nzd_per_person</code> column to
 <code>listings_df</code>:</p>
 <div class="practice-input">
-<pre class="code"><code>listings_df[&#39;price_per_person&#39;] =
+<pre class="code"><code>listings_df[&#39;price_nzd_per_person&#39;] =
 
 listings_df</code></pre>
 </div>
 <div class="practice-output">
-<pre class="code"><code>listings_df[&#39;price_per_person&#39;] = listings_df[&#39;price_nzd&#39;] / listings_df[&#39;accommodates&#39;]
+<pre class="code"><code>listings_df[&#39;price_nzd_per_person&#39;] = listings_df[&#39;price_nzd&#39;] / listings_df[&#39;accommodates&#39;]
 
 listings_df</code></pre>
 </div>
@@ -169,7 +169,7 @@ function and then <em>applying</em> it to a Series or DataFrame.</p>
 into a URL for the listing:</p>
 </div>
 <p>The following function transforms a listing ID into a URL:</p>
-<pre class="code"><code>def id_to_url(id):
+<pre class="code"><code>def id_to_url(id: str) -&gt; str:
     numeric_id = id.removeprefix(&#39;l&#39;)
     return f&#39;https://www.airbnb.co.nz/rooms/{numeric_id}&#39;
 
@@ -184,6 +184,11 @@ values to construct a new Series.</p>
 <pre class="code"><code>listings_df[&#39;id&#39;].apply(id_to_url)</code></pre>
 </div>
 <div class="speaker-notes">
+<blockquote>
+<p>Note: These are just regular strings, but Colab automatically
+displays them as hyperlinks because they start with
+<code>https://</code></p>
+</blockquote>
 <p>We can also use <code>.apply()</code> with
 <code>axis=&#39;columns&#39;</code> on an entire DataFrame to pass an entire row
 at a time to the function.</p>
@@ -257,7 +262,7 @@ NOT in Wellington:</p>
 <div class="practice">
 <pre class="code"><code>listings_df[~wellington_mask]</code></pre>
 </div>
-<div class="practice">
+<div class="speaker-notes">
 <p>Note: Similar to <code>null</code> values in SQL, conditions on
 <code>NaN</code> values always evaluate to <code>False</code>.</p>
 </div>

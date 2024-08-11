@@ -436,7 +436,7 @@ consider the following points:
 <summary>Hint: code for calculating price-per-person</summary>
 
 ```python
-listings_df['price_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
+listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
 ```
 
 </details>
@@ -445,7 +445,7 @@ listings_df['price_per_person'] = listings_df['price_nzd'] / listings_df['accomm
 <summary>Hint: code for creating a categorical column from a numeric column</summary>
 
 ```python
-listings_df['price_per_person_bin'] = pd.qcut(listings_df['price_per_person'], q=10).astype(str)
+listings_df['price_nzd_per_person_bin'] = pd.qcut(listings_df['price_nzd_per_person'], q=10).astype(str)
 
 # If you bin the rating instead, you may need to drop duplicate bins.
 listings_df['rating_bin'] = pd.qcut(listings_df['review_scores_rating'], q=10, duplicates='drop').astype(str)
@@ -468,16 +468,16 @@ reviewed_listings_df = listings_df[listings_df['number_of_reviews'] > 100]
 <summary>Full example answer</summary>
 
 ```python
-listings_df['price_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
+listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
 
-listings_df['price_per_person_bin'] = pd.qcut(listings_df['price_per_person'], q=10).astype(str)
+listings_df['price_nzd_per_person_bin'] = pd.qcut(listings_df['price_nzd_per_person'], q=10).astype(str)
 
 reviewed_listings_df = listings_df[listings_df['number_of_reviews'] > 100]
 
 px.box(
     # Ensure lower price bins are shown first.
-    reviewed_listings_df.sort_values(by='price_per_person'),
-    x='price_per_person_bin',
+    reviewed_listings_df.sort_values(by='price_nzd_per_person'),
+    x='price_nzd_per_person_bin',
     y='review_scores_rating',
 )
 ```
