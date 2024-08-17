@@ -38,6 +38,7 @@ our DataFrame of listings in this notebook.
 import pandas as pd
 import plotly.express as px
 # Ensure plots will be exported correctly by nbconvert
+# (only needed in Colab, should be disabled in local Jupyter)
 import plotly.io as pio
 pio.renderers.default = 'notebook'
 
