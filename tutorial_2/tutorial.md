@@ -235,21 +235,26 @@ DataFrame to pass an entire row at a time to the function.
 
 The output will still be a single Series of the returned values.
 
+For example, look at this function that takes a row and returns a
+listing description:
+::::::
+
+The following function produces a description from a listing row:
+
+```code
+def listing_to_description(row: pd.Series) -> str:
+    room_type = row['room_type']
+    host_name = row['host_name']
+    return f'{room_type} by {host_name}'
+```
+
+:::::: {.speaker-notes}
 The `row` passed into the function will be a Series representing a
 single row in the DataFrame.
 
 We can access the row's value for each column in the same way we
 access columns in a DataFrame.
 ::::::
-
-The following function produces a description from a listing row:
-
-```code
-def listing_to_description(row):
-    room_type = row['room_type']
-    host_name = row['host_name']
-    return f'{room_type} by {host_name}'
-```
 
 Produce a Series of listing descriptions:
 
@@ -277,9 +282,9 @@ quickly translate your ideas into working code!**
 The first step to filtering the rows in a DataFrame is to specify
 the conditions we want to filter by.
 
-Using a comparison operator on a Series performs the comparison to
-each value in the Series and returns a new Series full of Boolean
-values.
+Similar to performing maths with Series, using a comparison operator
+on a Series performs the comparison to each value in the Series and
+returns a new Series full of "True or False" Boolean values.
 
 A Boolean Series like this is commonly called a *mask*
 ::::::
@@ -290,6 +295,8 @@ Construct a *Boolean Series* that is `True` for listings in
 :::::: {.practice-input}
 ```code
 wellington_mask =
+
+wellington_mask
 ```
 ::::::
 
@@ -357,7 +364,7 @@ Find cheap listings in Wellington:
 
 :::::: {.practice}
 ```code
-listings_df[wellington_mask | cheap_mask]
+listings_df[cheap_mask & wellington_mask]
 ```
 ::::::
 
@@ -365,7 +372,7 @@ Find listings that are either cheap OR in Wellington:
 
 :::::: {.practice}
 ```code
-listings_df[wellington_mask & cheap_mask]
+listings_df[cheap_mask | wellington_mask]
 ```
 ::::::
 

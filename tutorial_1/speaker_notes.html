@@ -51,17 +51,17 @@ attributes</li>
 <ul>
 <li><strong>Jupyter notebooks</strong> are a very popular platform for
 Python coding, particularly for data analysis and visualisation.</li>
-<li>You can run <strong>Jupyter notebooks</strong> on your own computer,
-but today we are running Jupyter notebooks in <strong>Google
-Colab</strong> so that you don’t need to install Python or Jupyter on
-your own computer.
+<li>They can combine runnable code, rich outputs like plots, and
+formatted documentation.</li>
+<li>You can run <strong>Jupyter notebooks</strong> on your own computer
+with <strong>jupyterlab</strong>, but today we are running Jupyter
+notebooks in <strong>Google Colab</strong> so that you don’t need to
+install Python or Jupyter on your own computer.
 <ul>
 <li>Note: Because your notebooks will run on Google’s servers, you
 shouldn’t upload any company data or code you are not authorised to use
 outside of company-approved systems.</li>
 </ul></li>
-<li>Jupyter notebooks can also be run on your own desktop or server with
-a piece of software called <strong>JupyterLab</strong>.</li>
 </ul>
 </div>
 <blockquote>
@@ -185,7 +185,7 @@ mean)</li>
 <p>The mean (what most would call the “average”) is the sum of all
 prices divided by the number of listings.</p>
 <p>The 50% quantile is also known as the median, and is the “middle”
-value that is above the bottom 50% of values and below the top 50%.</p>
+value that 50% of values are above and 50% of values are below.</p>
 <p>The median price is quite a bit lower than the mean, suggesting there
 is a smaller number of higher prices that are dragging the mean
 higher.</p>
@@ -216,7 +216,7 @@ our data to give us a clearer picture.</p>
 </div>
 <p>Running the following cell will ensure we have Plotly installed
 (however, it is pre-installed in Google Colab):</p>
-<pre class="code"><code>%pip install plotly</code></pre>
+<pre class="code"><code>%pip install plotly nbformat</code></pre>
 <p>Import Plotly Express:</p>
 <div class="practice">
 <pre class="code"><code>import plotly.express as px</code></pre>
@@ -273,7 +273,7 @@ region” has the least listings?</h3>
 <p>Use the <code>.value_counts</code> method.</p>
 </div>
 <div class="practice">
-<pre class="code"><code>listings_df.value_counts(&#39;region_parent_name&#39;)</code></pre>
+<pre class="code"><code>listings_df[&#39;region_parent_name&#39;].value_counts()</code></pre>
 </div>
 <h3 id="a.-which-listing-was-last-reviewed-the-longest-time-ago">2a.
 Which listing was last reviewed the longest time ago?</h3>
@@ -329,6 +329,9 @@ set to the columns for price and number of reviews.</p>
 </div>
 <p>What does this scatter plot tell you about listings that are very
 expensive (say, greater than $1,000 per night)?</p>
+<div class="speaker-notes">
+<p>Zoom to price range of 0 to 5000</p>
+</div>
 <div class="practice">
 <p>These more expensive listings tend not to have more than about 100
 reviews.</p>

@@ -3,6 +3,8 @@
 Tutorial notebooks and slides for the **Exploratory Data Analysis with
 Python** workshop.
 
+<h1 style="font-size: 3.5em;">ben-denham.github.io/python-eda</h1>
+
 ## [Google Colab Notebooks](https://colab.google/){:target="_blank" rel="noopener"}
 
 ## Tutorials

@@ -33,14 +33,15 @@ In this tutorial you will:
 :::::: {.speaker-notes}
 * **Jupyter notebooks** are a very popular platform for Python coding,
   particularly for data analysis and visualisation.
-* You can run **Jupyter notebooks** on your own computer, but today we
-  are running Jupyter notebooks in **Google Colab** so that you don't
-  need to install Python or Jupyter on your own computer.
+* They can combine runnable code, rich outputs like plots, and
+  formatted documentation.
+* You can run **Jupyter notebooks** on your own computer with
+  **jupyterlab**, but today we are running Jupyter notebooks in
+  **Google Colab** so that you don't need to install Python or Jupyter
+  on your own computer.
   * Note: Because your notebooks will run on Google's servers, you
     shouldn't upload any company data or code you are not authorised
     to use outside of company-approved systems.
-* Jupyter notebooks can also be run on your own desktop or server with
-  a piece of software called **JupyterLab**.
 ::::::
 
 > Note: Your notebooks in Google Colab will be saved to your Google
@@ -212,7 +213,7 @@ The mean (what most would call the "average") is the sum of all prices
 divided by the number of listings.
 
 The 50% quantile is also known as the median, and is the "middle"
-value that is above the bottom 50% of values and below the top 50%.
+value that 50% of values are above and 50% of values are below.
 
 The median price is quite a bit lower than the mean, suggesting there
 is a smaller number of higher prices that are dragging the mean
@@ -262,7 +263,7 @@ Running the following cell will ensure we have Plotly installed
 (however, it is pre-installed in Google Colab):
 
 ```code
-%pip install plotly
+%pip install plotly nbformat
 ```
 
 Import Plotly Express:
@@ -342,7 +343,7 @@ Use the `.value_counts` method.
 
 :::::: {.practice}
 ```code
-listings_df.value_counts('region_parent_name')
+listings_df['region_parent_name'].value_counts()
 ```
 ::::::
 
@@ -420,6 +421,10 @@ px.scatter(listings_df, x='price_nzd', y='number_of_reviews')
 
 What does this scatter plot tell you about listings that are very
 expensive (say, greater than $1,000 per night)?
+
+:::::: {.speaker-notes}
+Zoom to price range of 0 to 5000
+::::::
 
 :::::: {.practice}
 These more expensive listings tend not to have more than about 100 reviews.

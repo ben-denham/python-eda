@@ -193,16 +193,20 @@ displays them as hyperlinks because they start with
 <code>axis=&#39;columns&#39;</code> on an entire DataFrame to pass an entire row
 at a time to the function.</p>
 <p>The output will still be a single Series of the returned values.</p>
+<p>For example, look at this function that takes a row and returns a
+listing description:</p>
+</div>
+<p>The following function produces a description from a listing row:</p>
+<pre class="code"><code>def listing_to_description(row: pd.Series) -&gt; str:
+    room_type = row[&#39;room_type&#39;]
+    host_name = row[&#39;host_name&#39;]
+    return f&#39;{room_type} by {host_name}&#39;</code></pre>
+<div class="speaker-notes">
 <p>The <code>row</code> passed into the function will be a Series
 representing a single row in the DataFrame.</p>
 <p>We can access the row’s value for each column in the same way we
 access columns in a DataFrame.</p>
 </div>
-<p>The following function produces a description from a listing row:</p>
-<pre class="code"><code>def listing_to_description(row):
-    room_type = row[&#39;room_type&#39;]
-    host_name = row[&#39;host_name&#39;]
-    return f&#39;{room_type} by {host_name}&#39;</code></pre>
 <p>Produce a Series of listing descriptions:</p>
 <div class="practice">
 <pre class="code"><code>listings_df.apply(listing_to_description, axis=&#39;columns&#39;)</code></pre>
@@ -220,15 +224,17 @@ to quickly translate your ideas into working code!</strong></p>
 <div class="speaker-notes">
 <p>The first step to filtering the rows in a DataFrame is to specify the
 conditions we want to filter by.</p>
-<p>Using a comparison operator on a Series performs the comparison to
-each value in the Series and returns a new Series full of Boolean
-values.</p>
+<p>Similar to performing maths with Series, using a comparison operator
+on a Series performs the comparison to each value in the Series and
+returns a new Series full of “True or False” Boolean values.</p>
 <p>A Boolean Series like this is commonly called a <em>mask</em></p>
 </div>
 <p>Construct a <em>Boolean Series</em> that is <code>True</code> for
 listings in <code>&#39;Wellington City&#39;</code>:</p>
 <div class="practice-input">
-<pre class="code"><code>wellington_mask =</code></pre>
+<pre class="code"><code>wellington_mask =
+
+wellington_mask</code></pre>
 </div>
 <div class="practice-output">
 <pre class="code"><code>wellington_mask = listings_df[&#39;region_parent_name&#39;] == &#39;Wellington City&#39;</code></pre>
@@ -281,11 +287,11 @@ listings that cost less than $100 per night:</p>
 cheap_mask</code></pre>
 <p>Find cheap listings in Wellington:</p>
 <div class="practice">
-<pre class="code"><code>listings_df[wellington_mask | cheap_mask]</code></pre>
+<pre class="code"><code>listings_df[cheap_mask &amp; wellington_mask]</code></pre>
 </div>
 <p>Find listings that are either cheap OR in Wellington:</p>
 <div class="practice">
-<pre class="code"><code>listings_df[wellington_mask &amp; cheap_mask]</code></pre>
+<pre class="code"><code>listings_df[cheap_mask | wellington_mask]</code></pre>
 </div>
 <div class="speaker-notes">
 <p>The tools for transforming and filtering data we’ve used here are the

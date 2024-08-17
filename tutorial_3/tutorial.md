@@ -37,6 +37,9 @@ our DataFrame of listings in this notebook.
 
 import pandas as pd
 import plotly.express as px
+# Ensure plots will be exported correctly by nbconvert
+import plotly.io as pio
+pio.renderers.default = 'notebook'
 
 listings_df = pd.read_csv('https://ben-denham.github.io/python-eda/data/inside_airbnb_listings_nz_2023_09.csv')
 
@@ -441,6 +444,13 @@ listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['ac
 
 </details>
 
+:::::: {.speaker-notes}
+```python
+listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
+```
+::::::
+
+
 <details>
 <summary>Hint: code for creating a categorical column from a numeric column</summary>
 
@@ -453,6 +463,15 @@ listings_df['rating_bin'] = pd.qcut(listings_df['review_scores_rating'], q=10, d
 
 </details>
 
+:::::: {.speaker-notes}
+```python
+listings_df['price_nzd_per_person_bin'] = pd.qcut(listings_df['price_nzd_per_person'], q=10).astype(str)
+
+# If you bin the rating instead, you may need to drop duplicate bins.
+listings_df['rating_bin'] = pd.qcut(listings_df['review_scores_rating'], q=10, duplicates='drop').astype(str)
+```
+::::::
+
 
 <details>
 <summary>Hint: code for excluding listings with few reviews</summary>
@@ -462,6 +481,12 @@ reviewed_listings_df = listings_df[listings_df['number_of_reviews'] > 100]
 ```
 
 </details>
+
+:::::: {.speaker-notes}
+```python
+reviewed_listings_df = listings_df[listings_df['number_of_reviews'] > 100]
+```
+::::::
 
 
 <details>
@@ -483,6 +508,23 @@ px.box(
 ```
 
 </details>
+
+:::::: {.speaker-notes}
+```python
+listings_df['price_nzd_per_person'] = listings_df['price_nzd'] / listings_df['accommodates']
+
+listings_df['price_nzd_per_person_bin'] = pd.qcut(listings_df['price_nzd_per_person'], q=10).astype(str)
+
+reviewed_listings_df = listings_df[listings_df['number_of_reviews'] > 100]
+
+px.box(
+    # Ensure lower price bins are shown first.
+    reviewed_listings_df.sort_values(by='price_nzd_per_person'),
+    x='price_nzd_per_person_bin',
+    y='review_scores_rating',
+)
+```
+::::::
 
 ## 2. Extra for Experts - Aggregation Practice
 
