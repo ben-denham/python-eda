@@ -49,6 +49,10 @@
 6. If you need help, **ask a neighbour or a helper**
 
 </div>
+
+<aside class="notes">
+</aside>
+
             </textarea>
           </section>
 
@@ -62,6 +66,17 @@
 # Exploratory Data Analysis with Python
 
 ### Dr Ben Denham
+
+<aside class="notes">
+
+  * Welcome to this workshop on Exploratory Data Analysis with Python
+  * My name's Ben
+  * I expect we have a range of experience levels in the audience
+    * Some of you may not have done data analysis before
+    * Some of you may be new to Python, potentially having just started with Grant's crash course this morning
+    * I've aimed to make this content be accessible to beginners in both areas
+
+</aside>
             </textarea>
           </section>
 
@@ -71,7 +86,7 @@
 
 <div>
 
-  <img src="images/about-me.png" width="90%">
+  <img src="images/about-me.png" width="85%">
 
 </div>
 
@@ -137,7 +152,10 @@
 
 <aside class="notes">
 
-  * Timings are just a guide
+  * Here's the structure for this afternoon
+  * The workshop will be broken up into three tutorials with short breaks in between
+  * After the second tutorial there will also be a short presentation on an approach for *effective* data analysis
+  * The timings are just a guideline
 
 </aside>
 
@@ -163,7 +181,12 @@
 
 <aside class="notes">
 
-  * As we progress through tutorials, examples will get more complex, so there will be less typing
+  * As we progress through tutorials, examples will get more complex,
+    so there will be less typing
+  * At the end of each tutorial there will be some exercises for you to practice what
+    you've learned
+  * After you've had some time to try them yourself, we'll go through them together as a group
+  * There will also be some "extra for experts" exercises for anyone racing ahead
 
 </aside>
 
@@ -186,7 +209,8 @@
 
 <aside class="notes">
 
-  * Practice raising hands
+  * If you need help with anything, just raise your hand and one of our helpers will come over
+  * Also, if you finish quickly, help each other out
   * Introduce yourself to your neighbours
     * Name
     * Beginner/Intermediate/Expert @ Python
@@ -214,6 +238,9 @@
 
 We're going to **learn EDA by doing it!**
 
+<aside class="notes">
+</aside>
+
             </textarea>
           </section>
 
@@ -234,14 +261,18 @@ We're going to **learn EDA by doing it!**
 
 <aside class="notes">
 
-  * When performing exploratory data analysis, it is very helpful to
-    have a goal in mind
+  * This is the dataset we'll be exploring today
   * Inside Airbnb collect this data to analyse the impact of short-term
     Airbnb rentals on residential housing areas
+  * When performing exploratory data analysis, it is very helpful to
+    have a goal in mind
   * Our eventual goal is to determine a reasonable price for an Airbnb listing,
     so we'll be interested in exploring relationships between the listing
     details of an Airbnb and its price.
-  * We might make a few detours along the way though :)
+  * That's not to say there's a magic formula for that - we'll see relationships
+    in data are often not as simple as we'd like
+  * We might also make a few detours to explore other aspects of the dataset
+    along the way :)
 
 </aside>
 
@@ -262,6 +293,16 @@ We're going to **learn EDA by doing it!**
   * A **machine learning model**
 
 </div>
+
+<aside class="notes">
+
+  * Why use Python for data analysis when other languages like R and Julia are more specifically designed for the task?
+  * Not only does Python have a wide range of data libraries with a global community supporting them
+  * ...but because Python is a more general purpose language, you have a lot more options for
+  * ...extending your analysis into a web application, data pipeline, or machine learning model
+
+</aside>
+
             </textarea>
           </section>
 
@@ -279,9 +320,12 @@ We're going to **learn EDA by doing it!**
 
 <aside class="notes">
 
+  * These are the tools we'll be using today
   * These are not the only options in the Python ecosystem
-  * And Pandas often provides many different approaches for a single task
+    * ...but they are some of the most popular
+  * Even just with these tools, there are often many ways to approach data analysis
   * This will be an opinionated guide of how to quickly get started using these tools
+  * ...I'm presenting how I use these tools day-to-day in my work
 
 </aside>
 
@@ -293,6 +337,12 @@ We're going to **learn EDA by doing it!**
           <section data-markdown>
             <textarea data-template>
 # Questions?
+
+<aside class="notes">
+
+  * Before we get started, any questions?
+
+</aside>
             </textarea>
           </section>
 
@@ -307,6 +357,15 @@ We're going to **learn EDA by doing it!**
 # How to Productively Explore Data
 
 ### Inspired by: [R for Data Science - Exploratory Data Analysis](https://r4ds.hadley.nz/eda)
+
+<aside class="notes">
+
+  * When I was first getting into data analysis, I often didn't really know where to start, and wasn't sure if I was looking into the right things
+  * This is what I would go back in time and tell myself if I could
+  * This has been heavily insipred by the excellent Exploratory Data Analysis chapter in the R for Data Science book
+
+</aside>
+
             </textarea>
           </section>
 
@@ -320,6 +379,11 @@ We're going to **learn EDA by doing it!**
 #### The ideas here may help you structure your process
 
 <aside class="notes">
+
+  * First, a caveat:
+  * This is not a one-size-all process to fit all datasets
+  * You have to follow your nose, and do what seems appropriate for **your data** and **your goals**
+
 </aside>
 
             </textarea>
@@ -349,6 +413,15 @@ We're going to **learn EDA by doing it!**
 
 </div>
 
+<aside class="notes">
+
+  * Exploratory data analysis is all about learning as much as you can
+    about your data as efficiently as possible
+  * Following an iterative process is a good way to check if you need to change direction
+  * *go through steps*
+
+</aside>
+
             </textarea>
           </section>
 
@@ -360,12 +433,28 @@ We're going to **learn EDA by doing it!**
 
 <p style="font-size: 0.5em;">By Efbrazil, CC BY-SA 4.0, <a href="https://commons.wikimedia.org/w/index.php?curid=102392470">https://commons.wikimedia.org/w/index.php?curid=102392470</a></p>
 
+<aside class="notes">
+
+  * If all that sounds familiar, it might be because its basically the "scientific
+    method" you might have learned at school
+  * Start with a question, make a hypothesis, test it, document the result, and repeat
+
+</aside>
+
             </textarea>
           </section>
 
           <section data-markdown>
             <textarea data-template>
 <img src="images/adam-science.gif" width="100%">
+
+<aside class="notes">
+
+  * I can't emphasize the documentation part enough
+  * You can end up repeating your analysis a few weeks or months down the track because you forgot to write down what you learned
+  * Writing results down also helps you organise your thoughts and identify the most productive next steps
+
+</aside>
             </textarea>
           </section>
 
@@ -373,9 +462,9 @@ We're going to **learn EDA by doing it!**
             <textarea data-template>
 ## But what kinds of questions?
 
-<div style="font-size: 1em;">
+<div style="font-size: 0.95em;">
 
-1. <!-- .element class="fragment" -->What <strong><em>variation</em></strong> can I see within this column?
+1. <!-- .element class="fragment" -->What <strong><em>variation</em></strong> can I see within this <em>individual</em> column?
    * Use summary statistics, plots of distribution
 2. <!-- .element class="fragment" -->What <strong><em>covariation</em></strong> can I see between these columns?
    * Start with pairs of columns - e.g. scatter plots
@@ -383,6 +472,9 @@ We're going to **learn EDA by doing it!**
      **establishing a causal relationship**
 
 </div>
+
+<aside class="notes">
+</aside>
 
             </textarea>
           </section>
@@ -405,6 +497,17 @@ We're going to **learn EDA by doing it!**
 </div>
 
 **Tip:** Try several bin widths for continuous columns!
+
+<aside class="notes">
+
+  * One of the simplest and most powerful visualisations is to simply plot the distribution of a column's values
+  * We've seen these already today:
+    * Histograms for continuous values - i.e. most numeric values
+    * Frequency bar charts of categorical values, like categories or integers
+  * For histograms, the width of the bins can have a big impact on the patterns you'll see, so try varying the number of bins in your plot
+
+</aside>
+
             </textarea>
           </section>
 
@@ -419,6 +522,12 @@ We're going to **learn EDA by doing it!**
   * E.g. Spikes at whole-numbered ratings
 * <!-- .element class="fragment" --><strong>Any apparent subgroups/clusters of points?</strong>
   * How are clusters similar and how do they differ?
+
+<aside class="notes">
+
+  * Looking at a distribution could lead to some follow-up questions like these
+
+</aside>
 
             </textarea>
           </section>
@@ -440,6 +549,18 @@ We're going to **learn EDA by doing it!**
 
 **Tip:** Make overlapping scatter points more visible with
 transparency or random jitter to point positions
+
+<aside class="notes">
+
+  * Now looking at covariation between two columns, we need to consider whether each
+    of the columns is continuous or categorical
+  * If both columns are continuous, a scatter plot is the classic approach
+  * But too many overlapping points can make it hard to compare the density of points in some areas
+  * You could try making points partially transparent so that denser regions appear darker
+  * Or sometimes adding a small random number to each point can help spread points away from a specific location - like a whole number
+  * Also, heatmaps might be clearer than scatter plots in some cases
+
+</aside>
             </textarea>
           </section>
 
@@ -462,8 +583,19 @@ transparency or random jitter to point positions
   </div>
 </div>
 
-
 (we'll see similar examples in the next tutorial)
+
+<aside class="notes">
+
+  * There are several ways to look at covariation between a continuous column and a categorical column
+  * They generally rely on plotting the distribution of the continous column for each categorical value
+  * For example, plotting in a different colour for each category
+  * ...or completely separate subplots
+  * Box plots are well suited for this because they let us easily compare medians and other quartiles of distributions while still seeing outliers
+  * We're going to see how to make plots like these in the final tutorial
+
+</aside>
+
             </textarea>
           </section>
 
@@ -481,7 +613,13 @@ transparency or random jitter to point positions
   <img style="margin: 0; width: 75%;" src="images/categorical-heatmap.png">
 </div>
 
+<aside class="notes">
 
+  * Finally, when looking at covariation between two categorical columns
+  * ...we can use stacked bar charts, where one categorical column's values are along the x-axis while the other's are stacked in different colours
+  * ...or we could use a heatmap showing the frequency of combinations of values from the two columns
+
+</aside>
             </textarea>
           </section>
 
@@ -493,6 +631,16 @@ transparency or random jitter to point positions
 * **How strong is the relationship?**
 * **What other variables might affect it?**
 * **Does the relationship change for subgroups?**
+
+<aside class="notes">
+
+  * Here are some questions you might ask about the covariation between two columns
+  * *first two points*
+  * Points 3 and 4: Is there another variable that needs to be considered along with these two,
+  * ...or could the relationship be different for different subsets of the data?
+  * For example, maybe a poor rating is only a reliable indicator of quality if the number of reviews is high enough
+
+</aside>
 
             </textarea>
           </section>
@@ -515,12 +663,34 @@ transparency or random jitter to point positions
 
 </div>
 
+<aside class="notes">
+
+  * Finally, a few common gotchas to keep in mind
+  * *Point 1*
+  * Point 2: Data is almost never as correct as we'd like it to be
+  * Point 3:
+    * There's a lot you can read out there about statistical significance and trusting results
+    * But it's especially important to be careful when we're exploring the data as opposed to testing a predetermined hypothesis
+    * If you look for a correlation between hundreds of columns, chances are you might find one exists purely by chance
+    * That's not to say you shouldn't explore the data - just be skeptical of trusting relationships you find
+  * *Point 4*
+
+</aside>
+
             </textarea>
           </section>
 
           <section data-markdown>
             <textarea data-template>
 # Questions?
+
+<aside class="notes">
+
+  * Before we move on to the final tutorial
+  * Are there any questions on the topics we've covered here?
+
+</aside>
+
             </textarea>
           </section>
 
@@ -552,10 +722,17 @@ transparency or random jitter to point positions
    * Load and view data in Pandas
 2. <!-- .element class="fragment" --><strong>Cleaning and preparing data</strong>
    * Transforming and filtering
-3. <!-- .element class="fragment" --><strong>Visualising relationships between attributes</strong>
+3. <!-- .element class="fragment" --><strong>Visualising relationships between columns</strong>
    * Plotting, grouping, and aggregating
 4. <!-- .element class="fragment" --><strong>Sharing your results</strong>
    * Exporting CSVs and HTML notebooks
+
+<aside class="notes">
+
+  * You've learned a powerful toolkit for attacking real world datasets!
+
+</aside>
+
             </textarea>
           </section>
 
@@ -578,15 +755,20 @@ transparency or random jitter to point positions
   * Andrew Ng's [Machine Learning](https://www.coursera.org/specializations/machine-learning-introduction)
     and [deeplearning.ai](https://www.deeplearning.ai/courses/) courses
 
-</div>
-
 <aside class="notes">
 
-* There's lots of great learning material out there, but these are the
-  resources I'm familiar with
-* PyNoon is an initiative started by myself and Grant Paton-Simpson
+  * We've gone over a lot in a short space of time today
+  * So I'd recommend reviewing this material and completing any exercises you didn't finish
+  * And I've included a bunch of links here to places you can learn more Python and statisics,
+    ...and for moving on to modelling your data with machine learning and AI tools
+  * There's lots of great learning material out there, but these are the
+    resources I'm familiar with
+  * PyNoon is an initiative started by myself and Grant Paton-Simpson
 
 </aside>
+
+</div>
+
             </textarea>
           </section>
 
@@ -623,9 +805,15 @@ transparency or random jitter to point positions
 
 <img src="images/sheep.webp">
 
+<div style="font-size: 0.78em;">
+
 Find notes and completed notebooks at:<br>[ben-denham.github.io/python-eda/speaker](https://ben-denham.github.io/python-eda/speaker)
 
-Any follow-up questions?<br>Come say hi or email me at ben@denham.nz
+Any follow-up questions? Come say hi or email me at ben@denham.nz
+<br>I'd also love to hear anything you discover from the AirBnB data!
+
+</div>
+
             </textarea>
           </section>
 
