@@ -117,9 +117,9 @@ to load our DataFrame of listings in this notebook.</p>
 
 import pandas as pd
 import plotly.express as px
-import plotly.io as pio
 # Ensure plots will be exported correctly by nbconvert
 # (only needed in Colab, should be disabled in local Jupyter)
+# import plotly.io as pio
 # pio.renderers.default = &#39;notebook&#39;
 
 listings_df = pd.read_csv(&#39;https://ben-denham.github.io/python-eda/data/inside_airbnb_listings_nz_2023_09.csv&#39;)
@@ -380,8 +380,9 @@ JavaScript.</li>
 </div>
 <p>To export this notebook as an HTML file:</p>
 <ol type="1">
-<li>Uncomment <code>pio.renderers.default = &#39;notebook&#39;</code> in the
-first code cell of this notebook, then re-run the cells in this notebook
+<li>Uncomment the <code>import plotly.io as pio</code> and
+<code>pio.renderers.default    = &#39;notebook&#39;</code> in the first code
+cell of this notebook, then re-run the cells in this notebook
 <ul>
 <li>You won’t see the plots rendered in the notebook - this is an issue
 with Colab.</li>
