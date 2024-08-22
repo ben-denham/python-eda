@@ -37,10 +37,10 @@ our DataFrame of listings in this notebook.
 
 import pandas as pd
 import plotly.express as px
+import plotly.io as pio
 # Ensure plots will be exported correctly by nbconvert
 # (only needed in Colab, should be disabled in local Jupyter)
-import plotly.io as pio
-pio.renderers.default = 'notebook'
+# pio.renderers.default = 'notebook'
 
 listings_df = pd.read_csv('https://ben-denham.github.io/python-eda/data/inside_airbnb_listings_nz_2023_09.csv')
 
@@ -355,14 +355,18 @@ We can also export our Jupyter notebook as a shareable HTML file.
 
 To export this notebook as an HTML file:
 
-1. Select `File -> Download -> Download .ipynb`
-2. Open the file browser from the left sidebar, and upload the file
+1. Uncomment `pio.renderers.default = 'notebook'` in the first code
+   cell of this notebook, then re-run the cells in this notebook
+   * You won't see the plots rendered in the notebook - this is an
+     issue with Colab.
+2. Select `File -> Download -> Download .ipynb`
+3. Open the file browser from the left sidebar, and upload the file
    you downloaded.
-3. Run the following cell to execute the shell command to convert the
+4. Run the following cell to execute the shell command to convert the
    uploaded `.ipynb` file to a `.html` file:
-4. Right-click on the generated `python_eda_tutorial_3.html` file in
+5. Right-click on the generated `python_eda_tutorial_3.html` file in
    the file browser and click `Download`.
-5. Open the downloaded file in any web browser.
+6. Open the downloaded file in any web browser.
 
 ```code
 !jupyter nbconvert --to html python_eda_tutorial_3.ipynb
